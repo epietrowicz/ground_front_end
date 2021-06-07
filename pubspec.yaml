@@ -1,0 +1,39 @@
+name: ground_front_end
+description: A new Flutter project.
+
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.7.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.2
+  font_awesome_flutter: ^9.0.0
+  camera: ^0.8.1
+  path_provider: ^2.0.1
+  path: ^1.8.0
+  image_picker: ^0.7.4
+  http: ^0.13.3
+  dio: ^4.0.0
+  charts_flutter: ^0.10.0
+  fl_chart: ^0.36.1
+  easy_rich_text: ^0.5.4
+  shared_preferences: ^2.0.5
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+  fonts:
+    - family: IBMPlexSerif
+      fonts:
+        - asset: fonts/IBMPlexSerif-Regular.ttf
+        - asset: fonts/IBMPlexSerif-Light.ttf
+        - asset: fonts/IBMPlexSerif-Thin.ttf
+        - asset: fonts/IBMPlexSerif-SemiBold.ttf
+
