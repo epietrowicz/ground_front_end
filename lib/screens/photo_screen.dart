@@ -1,5 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:ground_front_end/screens/page_view_screen.dart';
+import 'package:ground_front_end/screens/tutorial_screen_1.dart';
 import 'package:ground_front_end/widgets/camera_button.dart';
 import 'package:ground_front_end/widgets/navigation_button.dart';
 import 'package:ground_front_end/widgets/reusable_card.dart';
@@ -8,6 +10,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:ground_front_end/constants.dart';
 
 import 'package:ground_front_end/screens/results_screen.dart';
+
+import 'history_screen.dart';
 
 class PhotoScreen extends StatefulWidget {
   @override
@@ -91,14 +95,18 @@ class _PhotoScreenState extends State<PhotoScreen> {
     return Scaffold(
       backgroundColor: Color(0xff205D50),
       appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(FontAwesomeIcons.history),
-          onPressed: () {
-            setState(() {
-              _getNavBar = !_getNavBar;
-            });
-            print('getting history');
-          },
+        leading: Row(
+          children: [
+            IconButton(
+              icon: Icon(FontAwesomeIcons.compass),
+              onPressed: () {
+                setState(() {
+                  _getNavBar = !_getNavBar;
+                });
+                print('getting history');
+              },
+            ),
+          ],
         ),
         actions: <Widget>[
           IconButton(
@@ -117,28 +125,48 @@ class _PhotoScreenState extends State<PhotoScreen> {
         children: [
           _getNavBar
               ? NavigationRail(
+                  backgroundColor: Color(0xff205D50),
                   selectedIndex: _selectedIndex,
                   onDestinationSelected: (int index) {
                     setState(() {
                       _selectedIndex = index;
                     });
+                    if (_selectedIndex == 1) {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return PageViewScreen();
+                      }));
+                    } else if (_selectedIndex == 2) {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return HistoryScreen(
+                          isLoggedIn: false,
+                        );
+                      }));
+                    }
                   },
                   labelType: NavigationRailLabelType.selected,
                   destinations: const <NavigationRailDestination>[
                     NavigationRailDestination(
-                      icon: Icon(Icons.favorite_border),
-                      selectedIcon: Icon(Icons.favorite),
-                      label: Text('First'),
+                      icon: Text('Analyze',
+                          style: TextStyle(color: Colors.white)),
+                      selectedIcon: Text('Analyze',
+                          style: TextStyle(color: Colors.lightBlue)),
+                      label: Text(''),
                     ),
                     NavigationRailDestination(
-                      icon: Icon(Icons.bookmark_border),
-                      selectedIcon: Icon(Icons.book),
-                      label: Text('Second'),
+                      icon: Text('Tutorial',
+                          style: TextStyle(color: Colors.white)),
+                      selectedIcon: Text('Tutorial',
+                          style: TextStyle(color: Colors.lightBlue)),
+                      label: Text(''),
                     ),
                     NavigationRailDestination(
-                      icon: Icon(Icons.star_border),
-                      selectedIcon: Icon(Icons.star),
-                      label: Text('Third'),
+                      icon: Text('History',
+                          style: TextStyle(color: Colors.white)),
+                      selectedIcon: Text('History',
+                          style: TextStyle(color: Colors.lightBlue)),
+                      label: Text(''),
                     ),
                   ],
                 )
@@ -155,22 +183,29 @@ class _PhotoScreenState extends State<PhotoScreen> {
                                 padding: const EdgeInsets.all(8.0),
                                 child: GestureDetector(
                                     onTap: takeImage,
-                                    child: Image.file(_image)),
+                                    child: Image.file(
+                                      _image,
+                                      height: 300,
+                                    )),
                               )
-                            : Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                  CameraIconButton(
-                                      icon: FontAwesomeIcons.camera,
-                                      onPressed: takeImage),
-                                  SizedBox(
-                                    height: 50.0,
-                                  ),
-                                  Text(
-                                    'Take a picture of your grounds',
-                                    style: kLabelTextStyle,
-                                  )
-                                ],
+                            : Padding(
+                                padding: const EdgeInsets.all(40.0),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    CameraIconButton(
+                                        icon: FontAwesomeIcons.camera,
+                                        onPressed: takeImage),
+                                    SizedBox(
+                                      height: 50.0,
+                                    ),
+                                    Text(
+                                      'Take a picture of your grounds',
+                                      style: kLabelTextStyle,
+                                      textAlign: TextAlign.center,
+                                    )
+                                  ],
+                                ),
                               ),
                       )
                     : Container(),
@@ -183,46 +218,51 @@ class _PhotoScreenState extends State<PhotoScreen> {
                           print('do something');
                         },
                         color: kActiveCardColour,
-                        cardChild: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: <Widget>[
-                            Icon(
-                              FontAwesomeIcons.coffee,
-                              color: Color(0xFF4C4F5E),
-                              size: 50,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: TextFormField(
-                                focusNode: brewFieldFocusNode,
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  //fontFamily: "Poppins",
-                                ),
-                                onChanged: (value) {
-                                  brewMethod = value;
-                                  print(brewMethod);
-                                },
-                                decoration: InputDecoration(
-                                  hintText: brewHintText,
-                                  hintStyle: TextStyle(
+                        cardChild: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: <Widget>[
+                              Icon(
+                                FontAwesomeIcons.coffee,
+                                color: Color(0xFF4C4F5E),
+                                size: 50,
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: TextFormField(
+                                  focusNode: brewFieldFocusNode,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
                                     color: Colors.black,
-                                    fontSize: 14.0,
+                                    //fontFamily: "Poppins",
                                   ),
-                                  // filled: true,
-                                  // fillColor: Colors.white,
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.black),
-                                    borderRadius: BorderRadius.circular(50),
+                                  onChanged: (value) {
+                                    brewMethod = value;
+                                    print(brewMethod);
+                                  },
+                                  decoration: InputDecoration(
+                                    hintText: brewHintText,
+                                    hintStyle: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 14.0,
+                                    ),
+                                    // filled: true,
+                                    // fillColor: Colors.white,
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: Colors.black),
+                                      borderRadius: BorderRadius.circular(50),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                        //borderSide: BorderSide(color: Colors.black),
+                                        borderRadius:
+                                            BorderRadius.circular(50)),
                                   ),
-                                  focusedBorder: OutlineInputBorder(
-                                      //borderSide: BorderSide(color: Colors.black),
-                                      borderRadius: BorderRadius.circular(50)),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                     ),
@@ -230,46 +270,51 @@ class _PhotoScreenState extends State<PhotoScreen> {
                       child: ReusableCard(
                         width: double.infinity,
                         color: kActiveCardColour,
-                        cardChild: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: <Widget>[
-                            Icon(
-                              FontAwesomeIcons.cogs,
-                              color: Color(0xFF4C4F5E),
-                              size: 50,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: TextFormField(
-                                focusNode: grinderFieldFocusNode,
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  //fontFamily: "Poppins",
-                                ),
-                                onChanged: (value) {
-                                  grindMethod = value;
-                                  print(grindMethod);
-                                },
-                                decoration: InputDecoration(
-                                  hintText: grindHintText,
-                                  hintStyle: TextStyle(
+                        cardChild: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: <Widget>[
+                              Icon(
+                                FontAwesomeIcons.cogs,
+                                color: Color(0xFF4C4F5E),
+                                size: 50,
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: TextFormField(
+                                  focusNode: grinderFieldFocusNode,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
                                     color: Colors.black,
-                                    fontSize: 14.0,
+                                    //fontFamily: "Poppins",
                                   ),
-                                  // filled: true,
-                                  // fillColor: Colors.white,
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.black),
-                                    borderRadius: BorderRadius.circular(50),
+                                  onChanged: (value) {
+                                    grindMethod = value;
+                                    print(grindMethod);
+                                  },
+                                  decoration: InputDecoration(
+                                    hintText: grindHintText,
+                                    hintStyle: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 14.0,
+                                    ),
+                                    // filled: true,
+                                    // fillColor: Colors.white,
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: Colors.black),
+                                      borderRadius: BorderRadius.circular(50),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                        //borderSide: BorderSide(color: Colors.black),
+                                        borderRadius:
+                                            BorderRadius.circular(50)),
                                   ),
-                                  focusedBorder: OutlineInputBorder(
-                                      //borderSide: BorderSide(color: Colors.black),
-                                      borderRadius: BorderRadius.circular(50)),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                     ),
