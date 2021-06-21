@@ -26,6 +26,9 @@ dependencies:
   amplify_auth_cognito: '<1.0.0'
   amplify_analytics_pinpoint: '<1.0.0'
   flutter_login: ^2.0.0
+  provider: ^5.0.0
+  localstorage: ^4.0.0+1
+  intl: ^0.17.0
 
 dev_dependencies:
   flutter_test:

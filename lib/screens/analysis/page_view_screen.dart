@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ground_front_end/screens/tutorial_screen_1.dart';
-import 'package:ground_front_end/screens/tutorial_screen_2.dart';
-import 'package:ground_front_end/screens/tutorial_screen_3.dart';
-import 'package:ground_front_end/screens/tutorial_screen_4.dart';
+import 'package:ground_front_end/screens/tutorial_screen.dart';
 import 'package:ground_front_end/widgets/dots_indicator.dart';
 
 class PageViewScreen extends StatefulWidget {
@@ -20,10 +17,25 @@ class _PageViewScreenState extends State<PageViewScreen> {
   final _kArrowColor = Colors.black.withOpacity(0.8);
 
   final List<Widget> _pages = <Widget>[
-    TutorialScreen1(),
-    TutorialScreen2(),
-    TutorialScreen3(),
-    TutorialScreen4(),
+    TutorialScreen(
+        showTitle: true,
+        heading1: 'Some things to note',
+        heading2: 'Swipe to see how to get the best results.'),
+    TutorialScreen(
+        showTitle: false,
+        heading1: 'Take your photo at the right distance',
+        heading2:
+            'The algorithm needs to see all four edges of the paper, make sure they are visible in your shot.'),
+    TutorialScreen(
+        showTitle: false,
+        heading1: 'Avoid clusters',
+        heading2:
+            'Take care to avoid clumps of grounds. Tap out your coffee so the program can identify individual particles.'),
+    TutorialScreen(
+        showTitle: false,
+        heading1: 'Minimize shadows',
+        heading2:
+            'If you are getting unfavorable results, try expirementing with your lighting. Flash or additional light may help.'),
   ];
 
   @override
@@ -34,26 +46,26 @@ class _PageViewScreenState extends State<PageViewScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      body: new IconTheme(
-        data: new IconThemeData(color: _kArrowColor),
-        child: new Stack(
+    return Scaffold(
+      body: IconTheme(
+        data: IconThemeData(color: _kArrowColor),
+        child: Stack(
           children: <Widget>[
-            new PageView.builder(
-              physics: new AlwaysScrollableScrollPhysics(),
+            PageView.builder(
+              physics: AlwaysScrollableScrollPhysics(),
               controller: _controller,
               itemBuilder: (BuildContext context, int index) {
                 return _pages[index % _pages.length];
               },
             ),
-            new Positioned(
+            Positioned(
               bottom: 20.0,
               left: 0.0,
               right: 0.0,
-              child: new Container(
+              child: Container(
                 padding: const EdgeInsets.all(20.0),
-                child: new Center(
-                  child: new DotsIndicator(
+                child: Center(
+                  child: DotsIndicator(
                     controller: _controller,
                     itemCount: _pages.length,
                     onPageSelected: (int page) {

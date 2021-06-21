@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:amplify_flutter/amplify.dart';
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:flutter_login/flutter_login.dart';
+import 'package:ground_front_end/helpers/user_model.dart';
+import 'package:provider/provider.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -63,20 +65,33 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
-    return FlutterLogin(
-      title: 'Welcome',
-      onLogin: _onLogin,
-      onRecoverPassword: (String email) => _onRecoverPassword(context, email),
-      onSignup: _onSignup,
-      theme: LoginTheme(
-        primaryColor: Theme.of(context).primaryColor,
+    // all this scheme bullshit is to change the icon color while the textfield is selected
+    ColorScheme themeColors =
+        new ThemeData().colorScheme.copyWith(primary: Color(0xff205D50));
+    return Theme(
+      data: Theme.of(context).copyWith(colorScheme: themeColors),
+      child: FlutterLogin(
+        title: 'Login',
+        onLogin: _onLogin,
+        onRecoverPassword: (String email) => _onRecoverPassword(context, email),
+        onSignup: _onSignup,
+        theme: LoginTheme(
+            primaryColor: Color(0xff205D50),
+            accentColor: Colors.white,
+            inputTheme: InputDecorationTheme(
+                filled: true, labelStyle: TextStyle(color: Colors.black)),
+            cardTheme: CardTheme(
+              color: Colors.white,
+              shadowColor: Colors.black,
+            )),
+        onSubmitAnimationCompleted: () {
+          Provider.of<UserModel>(context, listen: false).userLoggedIn();
+          Navigator.of(context).pushReplacementNamed(
+            _isSignedIn ? '/history' : '/confirm',
+            arguments: _data,
+          );
+        },
       ),
-      onSubmitAnimationCompleted: () {
-        Navigator.of(context).pushReplacementNamed(
-          _isSignedIn ? '/dashboard' : '/confirm',
-          arguments: _data,
-        );
-      },
     );
   }
 }

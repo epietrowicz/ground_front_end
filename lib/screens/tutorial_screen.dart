@@ -1,14 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:ground_front_end/widgets/navigation_button.dart';
 import '../constants.dart';
-import 'photo_screen.dart';
+import './analysis/photo_screen.dart';
 
-class TutorialScreen2 extends StatefulWidget {
+class TutorialScreen extends StatefulWidget {
+  TutorialScreen({this.showTitle, this.heading1, this.heading2});
+
+  final bool showTitle;
+  final String heading1;
+  final String heading2;
+
   @override
-  _TutorialScreenState2 createState() => _TutorialScreenState2();
+  _TutorialScreenState createState() => _TutorialScreenState();
 }
 
-class _TutorialScreenState2 extends State<TutorialScreen2> {
+class _TutorialScreenState extends State<TutorialScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,31 +30,37 @@ class _TutorialScreenState2 extends State<TutorialScreen2> {
                 //mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 //crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Text('roastlytics', style: kTitleTextStyle),
-                  // Row(
-                  //   mainAxisAlignment: MainAxisAlignment.end,
-                  //   children: [
-                  //     Text('GRO', style: kTitleTextStyle),
-                  //   ],
-                  // ),
-                  // Row(
-                  //   mainAxisAlignment: MainAxisAlignment.start,
-                  //   children: [
-                  //     Text('UND', style: kTitleTextStyle),
-                  //   ],
-                  // ),
+                  widget.showTitle
+                      ? Text('roastlytics', style: kTitleTextStyle)
+                      : Container(),
+                  //   Row(
+                  //     mainAxisAlignment: MainAxisAlignment.end,
+                  //     children: [
+                  //       Text(
+                  //         'GRO',
+                  //         style: kTitleTextStyle,
+                  //       ),
+                  //     ],
+                  //   ),
+                  //   Row(
+                  //     mainAxisAlignment: MainAxisAlignment.start,
+                  //     children: [
+                  //       Text('UND', style: kTitleTextStyle),
+                  //     ],
+                  //   ),
                   Padding(
                     padding: const EdgeInsets.all(20.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Take your photo at the right distance',
-                            style: kSubtitleTextStyle),
+                        // 'Some things to note'
+                        Text(widget.heading1, style: kSubtitleTextStyle),
                         SizedBox(
                           height: 20.0,
                         ),
+                        //'Swipe to see how to get the best results.'
                         Text(
-                          'The algorithm needs to see all four edges of the paper, make sure they are visible in your shot.',
+                          widget.heading2,
                           style: kH1TextStyle,
                         ),
                       ],
@@ -68,7 +80,7 @@ class _TutorialScreenState2 extends State<TutorialScreen2> {
                 }));
               },
             ),
-          ),
+          )
         ],
       ),
     );

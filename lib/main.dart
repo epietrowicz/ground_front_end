@@ -1,13 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:ground_front_end/screens/confirm_screen.dart';
-import 'package:ground_front_end/screens/page_view_screen.dart';
+import 'package:flutter_login/flutter_login.dart';
+import 'package:ground_front_end/helpers/user_model.dart';
+import 'package:ground_front_end/screens/account/confirm_screen.dart';
+import 'package:ground_front_end/screens/analysis/history_screen.dart';
+import 'package:ground_front_end/screens/analysis/page_view_screen.dart';
+import 'package:provider/provider.dart';
 
 import 'helpers/configure_amplify.dart';
+import 'screens/account/confirm_reset_screen.dart';
+import 'screens/account/dashboard_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await configureAmplify();
-  runApp(MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => UserModel(),
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -36,6 +47,12 @@ class MyApp extends StatelessWidget {
           if (settings.name == '/dashboard') {
             return PageRouteBuilder(
               pageBuilder: (_, __, ___) => DashboardScreen(),
+              transitionsBuilder: (_, __, ___, child) => child,
+            );
+          }
+          if (settings.name == '/history') {
+            return PageRouteBuilder(
+              pageBuilder: (_, __, ___) => HistoryScreen(),
               transitionsBuilder: (_, __, ___, child) => child,
             );
           }

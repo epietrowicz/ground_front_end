@@ -39,7 +39,7 @@ class _ConfirmScreenState extends State<ConfirmScreen> {
             username: data.name, password: data.password);
 
         if (user.isSignedIn) {
-          Navigator.pushReplacementNamed(context, '/dashboard');
+          Navigator.pushReplacementNamed(context, '/history');
         }
       }
     } on AuthException catch (e) {
