@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:ground_front_end/screens/analysis/page_view_screen.dart';
 import 'package:ground_front_end/screens/analysis/photo_screen.dart';
 import 'package:ground_front_end/screens/analysis/results_screen.dart';
-import 'package:ground_front_end/widgets/navigation_button.dart';
 import 'package:localstorage/localstorage.dart';
 
 import '../../constants.dart';
@@ -60,8 +58,6 @@ class _HistoryScreenState extends State<HistoryScreen> {
   final LocalStorage storage = new LocalStorage('results_page');
   final ResultsList list = new ResultsList();
   bool _initalized = false;
-  bool _getNavBar = false;
-  int _selectedIndex = 2;
 
   @override
   void initState() {
@@ -100,14 +96,6 @@ class _HistoryScreenState extends State<HistoryScreen> {
 
   _saveToStorage() {
     storage.setItem('results', list.toJSONEncodable());
-  }
-
-  _clearStorage() async {
-    await storage.clear();
-
-    setState(() {
-      list.results = storage.getItem('results') ?? [];
-    });
   }
 
   @override
@@ -156,75 +144,6 @@ class _HistoryScreenState extends State<HistoryScreen> {
               }
               _initalized = true;
             }
-
-            // List<Widget> widgets = [];
-            // if (list.results != null) {
-            //   for (var item in list.results) {
-            //     widgets.add(
-            // ListTile(
-            //   onTap:
-            //   () {
-            //     Navigator.push(context,
-            //         MaterialPageRoute(builder: (context) {
-            //       return ResultsScreen(
-            //         isNewAnalysis: false,
-            //       );
-            //     }));
-            //   },
-            //   visualDensity: VisualDensity(vertical: 3.0),
-            //   // isThreeLine: true,
-            //   contentPadding:
-            //       EdgeInsets.symmetric(horizontal: 25.0, vertical: 0.0),
-            //   title: Text(
-            //     'Brew saved on ' + item.date.toString(),
-            //     style: TextStyle(
-            //         color: Colors.white, fontWeight: FontWeight.bold),
-            //   ),
-            //   subtitle: Row(
-            //     children: <Widget>[
-            //       Icon(
-            //         Icons.settings,
-            //         color: Colors.white24,
-            //         size: 20.0,
-            //       ),
-            //       SizedBox(
-            //         width: 5.0,
-            //       ),
-            //       Container(
-            //         width: 105.0,
-            //         child: Text(item.grindSetting.toString(),
-            //             overflow: TextOverflow.ellipsis,
-            //             style: TextStyle(color: Colors.white)),
-            //       ),
-            //       SizedBox(
-            //         width: 5.0,
-            //       ),
-            //       Icon(
-            //         Icons.local_cafe,
-            //         color: Colors.white24,
-            //         size: 20.0,
-            //       ),
-            //       SizedBox(
-            //         width: 5.0,
-            //       ),
-            //       Container(
-            //         width: 105.0,
-            //         child: Text(item.brewMethod.toString(),
-            //             overflow: TextOverflow.ellipsis,
-            //             style: TextStyle(color: Colors.white)),
-            //       )
-            //     ],
-            //   ),
-            //   trailing: Column(
-            //     mainAxisAlignment: MainAxisAlignment.center,
-            //     children: [
-            //       Icon(Icons.keyboard_arrow_right,
-            //           color: Colors.white, size: 35.0),
-            //     ],
-            //   )));
-            //widgets.add(Text(item.xs.toString()));
-            //   }
-            // }
             return ListView.builder(
               itemCount: list.results.length,
               itemBuilder: (context, index) {

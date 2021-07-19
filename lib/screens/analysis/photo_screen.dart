@@ -59,8 +59,6 @@ class _PhotoScreenState extends State<PhotoScreen> {
 
   Future getImage() async {
     final pickedFile = await picker.getImage(source: ImageSource.gallery);
-    // final pickedFile = await picker.getImage(source: ImageSource.camera);
-
     setState(() {
       if (pickedFile != null) {
         hasImage = true;
@@ -73,7 +71,6 @@ class _PhotoScreenState extends State<PhotoScreen> {
   }
 
   Future takeImage() async {
-    // final pickedFile = await picker.getImage(source: ImageSource.gallery);
     final pickedFile = await picker.getImage(source: ImageSource.camera);
 
     setState(() {
@@ -160,9 +157,6 @@ class _PhotoScreenState extends State<PhotoScreen> {
                 Flexible(
                   child: ReusableCard(
                     width: double.infinity,
-                    onPress: () {
-                      print('do something');
-                    },
                     color: kActiveCardColour,
                     cardChild: Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -181,7 +175,6 @@ class _PhotoScreenState extends State<PhotoScreen> {
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 color: Colors.black,
-                                //fontFamily: "Poppins",
                               ),
                               onChanged: (value) {
                                 brewMethod = value;
@@ -193,14 +186,11 @@ class _PhotoScreenState extends State<PhotoScreen> {
                                   color: Colors.black,
                                   fontSize: 12.0,
                                 ),
-                                // filled: true,
-                                // fillColor: Colors.white,
                                 enabledBorder: OutlineInputBorder(
                                   borderSide: BorderSide(color: Colors.black),
                                   borderRadius: BorderRadius.circular(50),
                                 ),
                                 focusedBorder: OutlineInputBorder(
-                                    //borderSide: BorderSide(color: Colors.black),
                                     borderRadius: BorderRadius.circular(50)),
                               ),
                             ),
@@ -243,14 +233,11 @@ class _PhotoScreenState extends State<PhotoScreen> {
                                   color: Colors.black,
                                   fontSize: 12.0,
                                 ),
-                                // filled: true,
-                                // fillColor: Colors.white,
                                 enabledBorder: OutlineInputBorder(
                                   borderSide: BorderSide(color: Colors.black),
                                   borderRadius: BorderRadius.circular(50),
                                 ),
                                 focusedBorder: OutlineInputBorder(
-                                    //borderSide: BorderSide(color: Colors.black),
                                     borderRadius: BorderRadius.circular(50)),
                               ),
                             ),

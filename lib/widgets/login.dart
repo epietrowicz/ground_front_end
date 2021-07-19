@@ -65,7 +65,6 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
-    // all this scheme bullshit is to change the icon color while the textfield is selected
     ColorScheme themeColors =
         new ThemeData().colorScheme.copyWith(primary: Color(0xff205D50));
     return Theme(

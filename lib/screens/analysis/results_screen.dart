@@ -8,7 +8,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:ground_front_end/screens/analysis/history_screen.dart';
 import 'package:ground_front_end/widgets/ground_distro_graph.dart';
 import 'package:ground_front_end/widgets/navigation_button.dart';
-import 'package:easy_rich_text/easy_rich_text.dart';
 
 import 'package:ground_front_end/widgets/reusable_card.dart';
 import 'package:ground_front_end/constants.dart';
@@ -168,7 +167,6 @@ class ResultWidget extends StatelessWidget {
           gradient: graphGradient,
         ),
         Row(
-          //mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Flexible(
               child: ReusableCard(
@@ -194,8 +192,6 @@ class ResultWidget extends StatelessWidget {
                           fontFamily: 'IBMPlexSerif-Light',
                           color: Colors.black,
                           fontSize: 15,
-                          //fontWeight: FontWeight.w500
-                          //fontFamily: "Poppins",
                         ),
                       ),
                       SizedBox(height: 10.0),
